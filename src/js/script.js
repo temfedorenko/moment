@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener('DOMContentLoaded', () => {
   // Clock and Calendar
 
-  const day = document.querySelector(".date");
-  const time = document.querySelector(".time");
-  const greeting = document.querySelector(".greeting");
-  const body = document.querySelector("body");
+  const day = document.querySelector('.date');
+  const time = document.querySelector('.time');
+  const greeting = document.querySelector('.greeting');
+  const body = document.querySelector('body');
 
   function showTime() {
     const date = new Date();
@@ -24,10 +24,10 @@ window.addEventListener("DOMContentLoaded", () => {
   function showDate() {
     const date = new Date();
 
-    const currentDate = date.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
+    const currentDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
     });
 
     day.textContent = currentDate;
@@ -41,13 +41,13 @@ window.addEventListener("DOMContentLoaded", () => {
     let timeOfDay;
 
     if (hours < 6) {
-      timeOfDay = "night";
+      timeOfDay = 'night';
     } else if (hours < 12) {
-      timeOfDay = "morning";
+      timeOfDay = 'morning';
     } else if (hours < 18) {
-      timeOfDay = "afternoon";
+      timeOfDay = 'afternoon';
     } else if (hours < 24) {
-      timeOfDay = "evening";
+      timeOfDay = 'evening';
     }
 
     return timeOfDay;
@@ -60,21 +60,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Save name
 
-  const nameInput = document.querySelector(".name");
+  const nameInput = document.querySelector('.name');
 
   function getLokalStorage() {
-    if (localStorage.getItem("name")) {
-      nameInput.value = localStorage.getItem("name");
+    if (localStorage.getItem('name')) {
+      nameInput.value = localStorage.getItem('name');
     }
   }
 
   getLokalStorage();
 
   function setLocalStorage() {
-    localStorage.setItem("name", nameInput.value);
+    localStorage.setItem('name', nameInput.value);
   }
 
-  window.addEventListener("beforeunload", setLocalStorage);
+  window.addEventListener('beforeunload', setLocalStorage);
 
   //   Backgrond image from git
 
@@ -86,24 +86,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
   getRandomNum();
 
-  console.log(String(randomNum).padStart(2, "0"));
+  console.log(String(randomNum).padStart(2, '0'));
 
   function setBg() {
     const timeOfDay = getTimeOfDay();
-    const bgNum =
-      randomNum < 10 ? String(randomNum).padStart(2, "0") : randomNum;
-    const bgLink = `url('https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg')`;
+    const bgNum = randomNum < 10 ? String(randomNum).padStart(2, '0') : randomNum;
+    const bgLink = `https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg`;
 
-    body.style.backgroundImage = bgLink;
-    console.log(bgNum, randomNum);
+    const img = new Image();
+    img.src = bgLink;
+
+    img.onload = () => {
+      body.style.backgroundImage = `url(${bgLink})`;
+    };
   }
 
   setBg();
 
   //   Slider
 
-  const prev = document.querySelector(".slide-prev");
-  const next = document.querySelector(".slide-next");
+  const prev = document.querySelector('.slide-prev');
+  const next = document.querySelector('.slide-next');
 
   function getSlidePrev() {
     randomNum -= 1;
@@ -125,7 +128,7 @@ window.addEventListener("DOMContentLoaded", () => {
     setBg();
   }
 
-  prev.addEventListener("click", getSlidePrev);
+  prev.addEventListener('click', getSlidePrev);
 
-  next.addEventListener("click", getSlideNext);
+  next.addEventListener('click', getSlideNext);
 });
