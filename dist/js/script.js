@@ -1,11 +1,12 @@
-'use strict';
+"use strict";
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   // Clock and Calendar
 
-  const day = document.querySelector('.date');
-  const time = document.querySelector('.time');
-  const greeting = document.querySelector('.greeting');
+  const day = document.querySelector(".date");
+  const time = document.querySelector(".time");
+  const greeting = document.querySelector(".greeting");
+  const body = document.querySelector("body");
 
   function showTime() {
     const date = new Date();
@@ -23,10 +24,10 @@ window.addEventListener('DOMContentLoaded', () => {
   function showDate() {
     const date = new Date();
 
-    const currentDate = date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
+    const currentDate = date.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
     });
 
     day.textContent = currentDate;
@@ -40,13 +41,13 @@ window.addEventListener('DOMContentLoaded', () => {
     let timeOfDay;
 
     if (hours < 6) {
-      timeOfDay = 'night';
+      timeOfDay = "night";
     } else if (hours < 12) {
-      timeOfDay = 'morning';
+      timeOfDay = "morning";
     } else if (hours < 18) {
-      timeOfDay = 'afternoon';
+      timeOfDay = "afternoon";
     } else if (hours < 24) {
-      timeOfDay = 'evening';
+      timeOfDay = "evening";
     }
 
     return timeOfDay;
@@ -57,12 +58,74 @@ window.addEventListener('DOMContentLoaded', () => {
     greeting.textContent = `Good ${timeOfDay},`;
   }
 
-  // const nameInput = document.querySelector('.name');
+  // Save name
 
-  // nameInput.addEventListener('change', () => {
-  //   const userName = nameInput.value;
-  //   console.log(userName);
+  const nameInput = document.querySelector(".name");
 
-  //   // nameInput.value = userName;
-  // });
+  function getLokalStorage() {
+    if (localStorage.getItem("name")) {
+      nameInput.value = localStorage.getItem("name");
+    }
+  }
+
+  getLokalStorage();
+
+  function setLocalStorage() {
+    localStorage.setItem("name", nameInput.value);
+  }
+
+  window.addEventListener("beforeunload", setLocalStorage);
+
+  //   Backgrond image from git
+
+  let randomNum;
+
+  function getRandomNum() {
+    randomNum = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+  }
+
+  getRandomNum();
+
+  console.log(String(randomNum).padStart(2, "0"));
+
+  function setBg() {
+    const timeOfDay = getTimeOfDay();
+    const bgNum =
+      randomNum < 10 ? String(randomNum).padStart(2, "0") : randomNum;
+    const bgLink = `url('https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg')`;
+
+    body.style.backgroundImage = bgLink;
+    console.log(bgNum, randomNum);
+  }
+
+  setBg();
+
+  //   Slider
+
+  const prev = document.querySelector(".slide-prev");
+  const next = document.querySelector(".slide-next");
+
+  function getSlidePrev() {
+    randomNum -= 1;
+
+    if (randomNum < 1) {
+      randomNum = 20;
+    }
+
+    setBg();
+  }
+
+  function getSlideNext() {
+    randomNum += 1;
+
+    if (randomNum > 20) {
+      randomNum = 1;
+    }
+
+    setBg();
+  }
+
+  prev.addEventListener("click", getSlidePrev);
+
+  next.addEventListener("click", getSlideNext);
 });
