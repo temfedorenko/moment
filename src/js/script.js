@@ -101,6 +101,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // setTimeout(setBg, 4000);
   setBg();
 
   //   Slider
@@ -129,6 +130,31 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   prev.addEventListener('click', getSlidePrev);
-
   next.addEventListener('click', getSlideNext);
+
+  // Weather
+  const city = document.querySelector('.city');
+  const weatherIcon = document.querySelector('.weather-icon');
+  const temperature = document.querySelector('.temperature');
+  const weatherDescription = document.querySelector('.weather-description');
+
+  let userCity = 'Kyiv';
+  city.value = 'Kyiv';
+
+  city.addEventListener('change', () => {
+    userCity = city.value;
+    getWeatherData();
+  });
+
+  async function getWeatherData() {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&lang=en&appid=26385191cf2115e9533991a95ea5c8df&units=metric`;
+    const result = await fetch(url);
+    const data = await result.json();
+    console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${data.main.temp}°C`;
+    weatherDescription.textContent = data.weather[0].description;
+  }
+
+  getWeatherData();
 });
