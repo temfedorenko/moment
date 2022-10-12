@@ -104,6 +104,7 @@ body {
   height: 40px;
   background-size: 40px 40px;
   background-image: url('../img/svg/play.svg');
+  transition: all 0.3s;
 }
 
 .pause {
