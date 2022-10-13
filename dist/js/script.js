@@ -340,6 +340,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   audio.addEventListener("timeupdate", updateProgress);
 
+  // setInterval(() => {
+  //   progress.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+
+  //   currentTime.textContent = audio.currentTime;
+  // }, 1000);
+
   //  -----Volume-----
   const volumeBtn = document.querySelector(".volume-btn");
 
