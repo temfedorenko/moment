@@ -206,7 +206,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const quoteBody = document.querySelector(".quote-body");
 
   const quoteImage = new Image();
-  quoteImage.src = "/img/loading-buffering.gif";
+  quoteImage.src = "./img/loading-buffering.gif";
   quoteImage.style.cssText = "width: 24px; height: 24px;";
 
   async function getQuotes() {
