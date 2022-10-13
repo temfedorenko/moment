@@ -206,7 +206,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const quoteBody = document.querySelector(".quote-body");
 
   const quoteImage = new Image();
-  quoteImage.src = "../img/loading-buffering.gif";
+  quoteImage.src = "/img/loading-buffering.gif";
   quoteImage.style.cssText = "width: 24px; height: 24px;";
 
   async function getQuotes() {
@@ -233,7 +233,7 @@ window.addEventListener("DOMContentLoaded", () => {
     getQuotes();
   });
 
-  // Audio Player
+  // Simple Audio Player
 
   const audio = new Audio();
   const audioPrev = document.querySelector(".play-prev");
@@ -318,4 +318,32 @@ window.addEventListener("DOMContentLoaded", () => {
   audioPrev.addEventListener("click", prevSong);
 
   audio.addEventListener("ended", nextSong);
+
+  // Advanced audioplayer
+
+  const trackTitle = document.querySelector(".track-title");
+  const currentTime = document.querySelector(".current-time");
+  const trackDuration = document.querySelector(".duration");
+  const timeline = document.querySelector(".timeline");
+  const progress = document.querySelector(".progress");
+  const volumeInput = document.querySelector(".volume-input");
+
+  // Progress Bar
+
+  console.log(audio.currentTime);
+
+  function updateProgress(e) {
+    const { duration, currentTime } = e.srcElement;
+    const progressPercent = (currentTime / duration) * 100;
+    progress.style.width = `${progressPercent}%`;
+  }
+
+  audio.addEventListener("timeupdate", updateProgress);
+
+  //  -----Volume-----
+  const volumeBtn = document.querySelector(".volume-btn");
+
+  volumeBtn.addEventListener("click", () => {
+    volumeBtn.classList.toggle("no-volume");
+  });
 });

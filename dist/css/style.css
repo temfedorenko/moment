@@ -45,7 +45,7 @@ body {
 .player-wrapper {
   padding: 15px;
   width: 250px;
-  height: 230px;
+  height: 220px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.3), inset -5px -5px 10px rgba(255, 255, 255, 0.3);
@@ -79,18 +79,66 @@ body {
 }
 
 .progress {
+  position: relative;
   background-color: rgba(255, 255, 255, 0.7);
-  width: 30%;
+  /* width: 30%; */
   height: 15px;
   border-radius: 10px;
 }
 
+.progress::after {
+  content: '';
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 1);
+
+}
+
 .volume {
-  margin-top: 22px;
+  margin-top: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
+}
+
+.volume-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 60%;
+  height: 10px;
+  background-color: rgb(194, 194, 194);
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.7s;
+}
+
+.volume-input:focus {
+  outline: none;
+}
+
+.volume-input::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+ color: rgba(255, 255, 255, 0.8);
+}
+
+.volume-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: visible;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(75, 75, 75);
+  box-shadow: -155px 0 0 150px rgba(255, 255, 255, 0.7);
 }
 
 .play-list {
@@ -174,10 +222,17 @@ body {
 }
 
 .volume-btn {
+  width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
   background-image: url('../img/svg/volume.svg');
+  transition: all 0.3s;
 }
 
+
+
 .no-volume {
+  background-size: 34px 34px;
   background-image: url('../img/svg/no_volume.svg');
 }
 
@@ -205,6 +260,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  -moz-column-gap: 12px;
   column-gap: 12px;
 }
 
@@ -223,6 +279,12 @@ body {
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
+}
+
+.city::-moz-placeholder {
+  font-size: 20px;
+  color: #fff;
+  opacity: 0.6;
 }
 
 .city::placeholder {
@@ -300,6 +362,11 @@ body {
   background-color: transparent;
   border: 0;
   outline: 0;
+}
+
+.name::-moz-placeholder {
+  color: #fff;
+  opacity: 0.6;
 }
 
 .name::placeholder {
