@@ -1,8 +1,8 @@
 const playList = [
   {
-    title: "Aqua Caelestis",
-    src: "./sounds/Aqua Caelestis.mp3",
-    duration: "00:39",
+    title: "Dark Necessities",
+    src: "./sounds/red-hot-chili-peppers-dark-necessities.mp3",
+    duration: "01:12",
   },
   {
     title: "Ennio Morricone",
@@ -10,7 +10,7 @@ const playList = [
     duration: "01:37",
   },
   {
-    title: "River Flows In You",
+    title: "River",
     src: "./sounds/River Flows In You.mp3",
     duration: "01:37",
   },
@@ -18,6 +18,16 @@ const playList = [
     title: "Summer Wind",
     src: "./sounds/SummerWind.mp3",
     duration: "01:50",
+  },
+  {
+    title: "Dao Meditation",
+    src: "./sounds/Dao Meditation.mp3",
+    duration: "01:37",
+  },
+  {
+    title: "Piano and rain",
+    src: "./sounds/Piano and rain.mp3",
+    duration: "02:34",
   },
 ];
 

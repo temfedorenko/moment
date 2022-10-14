@@ -15,10 +15,10 @@
   <header class="header">
     <div class="player">
       <div class="player-wrapper">
-        <div class="track-title">Aqua Caelestis</div>
+        <div class="track-title">Dark Necessities</div>
         <div class="track-time">
           <div class="current-time">0:00</div>
-          <div class="duration">0:39</div>
+          <div class="duration">01:12</div>
         </div>
         <div class="timeline">
           <div class="progress"></div>
@@ -29,11 +29,49 @@
           <button class="play-next player-icon"></button>
         </div>
         <div class="volume">
-          <input type="range" name="volume" min="0" max="1" step="0.01" value="0.4" class="volume-input">
+          <input type="range" name="volume" min="0" max="1" step="0.01" value="0.5" class="volume-input">
           <button class="volume-btn player-icon"></button>
         </div>
       </div>
       <ul class="play-list"></ul>
+    </div>
+    <div class="settings">
+      <div class="settings-body settings-body-active">
+        <div class="setting-language">
+          <div>language</div>
+          <div class="toggle">
+            <input type="checkbox" />
+            <label></label>
+          </div>
+        </div>
+        <div class="setting-images">
+          <div>background images</div>
+          <label for="github">Github</label>
+          <input type="radio" name="background" id="github" checked>
+          <label for="unsplash">Unsplash </label>
+          <input type="radio" name="background" id="unsplash ">
+          <label for="flickr">Flickr</label>
+          <input type="radio" name="background" id="flickr">
+        </div>
+        <div class="setting-elements">
+          <div>elements</div>
+          <label for="time">Time</label>
+          <input type="checkbox" id="time" checked>
+          <label for="weather">Weather</label>
+          <input type="checkbox" id="weather" checked>
+          <label for="player">Player</label>
+          <input type="checkbox" id="player" checked>
+          <label for="greeting">Greeting</label>
+          <input type="checkbox" id="greeting" checked>
+          <label for="quotes">Quotes</label>
+          <input type="checkbox" id="quotes" checked>
+          <label for="date">Date</label>
+          <input type="checkbox" id="date" checked>
+        </div>
+      </div>
+      <div class="settings-trigger">
+        <button class="settings-icon"></button>
+      </div>
     </div>
     <div class="weather">
       <input type="text" class="city">
