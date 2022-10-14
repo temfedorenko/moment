@@ -43,9 +43,9 @@ body {
 }
 
 .player-wrapper {
-  padding: 15px;
+  padding: 10px;
   width: 250px;
-  height: 220px;
+  height: 190px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.3), inset -5px -5px 10px rgba(255, 255, 255, 0.3);
@@ -55,21 +55,23 @@ body {
   display: flex;
   width: 120px;
   margin: 0 auto;
-  margin-top: 25px;
+  margin-top: 15px;
   align-items: center;
   justify-content: space-between;
 }
 
 .track-time {
-  margin-top: 30px;
-  width: 100%;
+  margin: 0 auto;
+  margin-top: 15px;
+  width: 90%;
   display: flex;
   justify-content: space-between;
 }
 
 .timeline {
+  margin: 0 auto;
   margin-top: 5px;
-  width: 100%;
+  width: 90%;
   height: 15px;
   background-color: rgb(194, 194, 194);
   border-radius: 10px;
@@ -80,10 +82,9 @@ body {
 
 .progress {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.7);
-  /* width: 30%; */
   height: 15px;
   border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .progress::after {
@@ -96,11 +97,10 @@ body {
   height: 18px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 1);
-
 }
 
 .volume {
-  margin-top: 12px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,7 +124,7 @@ body {
 .volume-input::-webkit-slider-runnable-track {
   appearance: none;
   cursor: pointer;
- color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .volume-input::-webkit-slider-thumb {
@@ -224,8 +224,6 @@ body {
   background-image: url('../img/svg/volume.svg');
   transition: all 0.3s;
 }
-
-
 
 .no-volume {
   background-size: 34px 34px;
