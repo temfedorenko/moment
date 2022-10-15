@@ -37,14 +37,14 @@
     </div>
     <div class="settings">
       <div class="settings-body settings-body-active">
-        <div class="setting-language">
+        <div class="settings-language">
           <div>language</div>
           <div class="toggle">
             <input type="checkbox" />
             <label></label>
           </div>
         </div>
-        <div class="setting-images">
+        <div class="settings-images">
           <div>background images</div>
           <label for="github">Github</label>
           <input type="radio" name="background" id="github" checked>
@@ -53,20 +53,20 @@
           <label for="flickr">Flickr</label>
           <input type="radio" name="background" id="flickr">
         </div>
-        <div class="setting-elements">
+        <div class="settings-elements">
           <div>elements</div>
           <label for="time">Time</label>
-          <input type="checkbox" id="time" checked>
+          <input class="settings-element" type="checkbox" id="time" checked>
           <label for="weather">Weather</label>
-          <input type="checkbox" id="weather" checked>
+          <input class="settings-element" type="checkbox" id="weather" checked>
           <label for="player">Player</label>
-          <input type="checkbox" id="player" checked>
-          <label for="greeting">Greeting</label>
-          <input type="checkbox" id="greeting" checked>
+          <input class="settings-element" type="checkbox" id="player" checked>
+          <label for="greeting-container">Greeting</label>
+          <input class="settings-element" type="checkbox" id="greeting-container" checked>
           <label for="quotes">Quotes</label>
-          <input type="checkbox" id="quotes" checked>
+          <input class="settings-element" type="checkbox" id="quotes" checked>
           <label for="date">Date</label>
-          <input type="checkbox" id="date" checked>
+          <input class="settings-element" type="checkbox" id="date" checked>
         </div>
       </div>
       <div class="settings-trigger">
@@ -92,7 +92,7 @@
       <button class="slide-prev slider-icon"></button>
       <button class="slide-next slider-icon"></button>
     </div>
-    <time class="time"></time>
+    <div class="time"></div>
     <date class="date"></date>
     <div class="greeting-container">
       <span class="greeting"></span>
@@ -101,10 +101,12 @@
   </main>
 
   <footer class="footer">
-    <button class="change-quote"></button>
-    <div class="quote-body">
-      <div class="quote"></div>
-      <div class="author"></div>
+    <div class="quotes">
+      <button class="change-quote"></button>
+      <div class="quote-body">
+        <div class="quote"></div>
+        <div class="author"></div>
+      </div>
     </div>
   </footer>
 

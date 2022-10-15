@@ -34,6 +34,7 @@ body {
 
 .player {
   display: flex;
+  transition: all 0.5s ease-in-out;
 }
 
 .track-title {
@@ -265,6 +266,7 @@ body {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.3), inset -5px -5px 10px rgba(255, 255, 255, 0.3);
+  user-select: none;
   visibility: hidden;
   opacity: 0;
   transition: all 0.4s ease-in-out;
@@ -275,18 +277,22 @@ body {
   opacity: 1;
 }
 
-.setting-language {
+.settings-language {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
-
 }
+
+/* .setting-elements {
+  user-select: none;
+} */
+
 .toggle {
   position: relative;
   box-sizing: border-box;
 }
-.toggle input[type="checkbox"] {
+.toggle input[type='checkbox'] {
   position: absolute;
   left: 0;
   top: 0;
@@ -326,10 +332,10 @@ body {
   box-sizing: border-box;
   transition: 0.2s ease-in;
 }
-.toggle input[type="checkbox"]:checked + label:before {
-  background: #4BD865;
+.toggle input[type='checkbox']:checked + label:before {
+  background: #4bd865;
 }
-.toggle input[type="checkbox"]:checked + label:after {
+.toggle input[type='checkbox']:checked + label:after {
   left: 60px;
 }
 
@@ -346,6 +352,7 @@ body {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.3), inset -5px -5px 10px rgba(255, 255, 255, 0.3);
+  transition: all 0.5s ease-in-out;
 }
 
 .weather-error {
@@ -418,12 +425,14 @@ body {
   font-family: 'Arial-MT';
   font-size: 100px;
   letter-spacing: -4px;
+  transition: all 0.5s ease-in-out;
 }
 
 .date {
   min-height: 28px;
   font-size: 24px;
   margin-bottom: 20px;
+  transition: all 0.5s ease-in-out;
 }
 
 .greeting-container {
@@ -434,6 +443,7 @@ body {
   min-height: 48px;
   width: 100vw;
   font-size: 40px;
+  transition: all 0.5s ease-in-out;
 }
 
 .greeting {
@@ -470,6 +480,10 @@ body {
   padding: 20px;
 }
 
+.quotes {
+  transition: all 0.5s ease-in-out;
+}
+
 .change-quote {
   margin-bottom: 30px;
   background-image: url('../img/svg/reload.svg');
@@ -481,6 +495,12 @@ body {
 
 .author {
   min-height: 20px;
+}
+
+.hiddenBlock {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
 
 @media (max-width: 768px) {

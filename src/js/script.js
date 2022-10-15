@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
-import playList from "./playList.js";
+import playList from './playList.js';
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener('DOMContentLoaded', () => {
   // Clock and Calendar
 
-  const day = document.querySelector(".date");
-  const time = document.querySelector(".time");
-  const greeting = document.querySelector(".greeting");
-  const body = document.querySelector("body");
+  const day = document.querySelector('.date');
+  const time = document.querySelector('.time');
+  const greeting = document.querySelector('.greeting');
+  const body = document.querySelector('body');
 
   function showTime() {
     const date = new Date();
@@ -24,10 +24,10 @@ window.addEventListener("DOMContentLoaded", () => {
   function showDate() {
     const date = new Date();
 
-    const currentDate = date.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
+    const currentDate = date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
     });
 
     day.textContent = currentDate;
@@ -41,13 +41,13 @@ window.addEventListener("DOMContentLoaded", () => {
     let timeOfDay;
 
     if (hours < 6) {
-      timeOfDay = "night";
+      timeOfDay = 'night';
     } else if (hours < 12) {
-      timeOfDay = "morning";
+      timeOfDay = 'morning';
     } else if (hours < 18) {
-      timeOfDay = "afternoon";
+      timeOfDay = 'afternoon';
     } else if (hours < 24) {
-      timeOfDay = "evening";
+      timeOfDay = 'evening';
     }
 
     return timeOfDay;
@@ -60,21 +60,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Save name
 
-  const nameInput = document.querySelector(".name");
+  const nameInput = document.querySelector('.name');
 
   function getLokalStorageName() {
-    if (localStorage.getItem("name")) {
-      nameInput.value = localStorage.getItem("name");
+    if (localStorage.getItem('name')) {
+      nameInput.value = localStorage.getItem('name');
     }
   }
 
   getLokalStorageName();
 
   function setLocalStorageName() {
-    localStorage.setItem("name", nameInput.value);
+    localStorage.setItem('name', nameInput.value);
   }
 
-  window.addEventListener("beforeunload", setLocalStorageName);
+  window.addEventListener('beforeunload', setLocalStorageName);
 
   // --------------------------------------------------------------------------Background Unsplash API
 
@@ -129,8 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function setBg() {
     const timeOfDay = getTimeOfDay();
-    const bgNum =
-      randomNum < 10 ? String(randomNum).padStart(2, "0") : randomNum;
+    const bgNum = randomNum < 10 ? String(randomNum).padStart(2, '0') : randomNum;
     const bgLink = `https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg`;
 
     const img = new Image();
@@ -145,8 +144,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //   Slider
 
-  const prev = document.querySelector(".slide-prev");
-  const next = document.querySelector(".slide-next");
+  const prev = document.querySelector('.slide-prev');
+  const next = document.querySelector('.slide-next');
 
   function getSlidePrev() {
     randomNum -= 1;
@@ -172,34 +171,34 @@ window.addEventListener("DOMContentLoaded", () => {
     // getLinkFlickrImg();
   }
 
-  prev.addEventListener("click", getSlidePrev);
-  next.addEventListener("click", getSlideNext);
+  prev.addEventListener('click', getSlidePrev);
+  next.addEventListener('click', getSlideNext);
 
   // Weather
-  const city = document.querySelector(".city");
-  const weatherIcon = document.querySelector(".weather-icon");
-  const temperature = document.querySelector(".temperature");
-  const feelsLike = document.querySelector(".feels-like");
-  const weatherDescription = document.querySelector(".weather-description");
-  const humidity = document.querySelector(".humidity");
-  const wind = document.querySelector(".wind");
-  const weatherError = document.querySelector(".weather-error");
+  const city = document.querySelector('.city');
+  const weatherIcon = document.querySelector('.weather-icon');
+  const temperature = document.querySelector('.temperature');
+  const feelsLike = document.querySelector('.feels-like');
+  const weatherDescription = document.querySelector('.weather-description');
+  const humidity = document.querySelector('.humidity');
+  const wind = document.querySelector('.wind');
+  const weatherError = document.querySelector('.weather-error');
 
   let userCity;
 
   function getLokalStorageCity() {
-    if (localStorage.getItem("city")) {
-      city.value = localStorage.getItem("city");
-      userCity = localStorage.getItem("city");
+    if (localStorage.getItem('city')) {
+      city.value = localStorage.getItem('city');
+      userCity = localStorage.getItem('city');
       getWeather();
     } else {
-      city.value = "Kyiv";
-      userCity = "Kyiv";
+      city.value = 'Kyiv';
+      userCity = 'Kyiv';
       getWeather();
     }
   }
 
-  city.addEventListener("change", () => {
+  city.addEventListener('change', () => {
     userCity = city.value;
     getWeather();
   });
@@ -210,24 +209,23 @@ window.addEventListener("DOMContentLoaded", () => {
     const data = await response.json();
 
     if (!response.ok) {
-      weatherError.textContent =
-        "city not found, please, try to enter your neerest city";
-      weatherIcon.className = "weather-icon owf";
-      temperature.textContent = "";
-      feelsLike.textContent = "";
-      weatherDescription.textContent = "";
-      humidity.textContent = "";
-      wind.textContent = "";
+      weatherError.textContent = 'city not found, please, try to enter your neerest city';
+      weatherIcon.className = 'weather-icon owf';
+      temperature.textContent = '';
+      feelsLike.textContent = '';
+      weatherDescription.textContent = '';
+      humidity.textContent = '';
+      wind.textContent = '';
     }
 
-    weatherIcon.className = "weather-icon owf";
+    weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     temperature.textContent = `${Math.round(data.main.temp)}°C`;
     feelsLike.textContent = `feels like: ${Math.round(data.main.feels_like)}°C`;
     weatherDescription.textContent = data.weather[0].description;
     humidity.textContent = `humidity: ${Math.round(data.main.humidity)}%`;
     wind.textContent = `wind speed: ${data.wind.speed.toFixed(1)} m/s`;
-    weatherError.textContent = "";
+    weatherError.textContent = '';
   }
 
   //  Save city
@@ -235,61 +233,59 @@ window.addEventListener("DOMContentLoaded", () => {
   getLokalStorageCity();
 
   function setLocalStorageCity() {
-    localStorage.setItem("city", city.value);
+    localStorage.setItem('city', city.value);
   }
 
-  window.addEventListener("beforeunload", setLocalStorageCity);
+  window.addEventListener('beforeunload', setLocalStorageCity);
 
   // Quotes
 
-  const quote = document.querySelector(".quote");
-  const author = document.querySelector(".author");
-  const quoteChanger = document.querySelector(".change-quote");
+  const quote = document.querySelector('.quote');
+  const author = document.querySelector('.author');
+  const quoteChanger = document.querySelector('.change-quote');
 
   const quoteImage = new Image();
-  quoteImage.src = "./img/loading-buffering.gif";
-  quoteImage.style.cssText = "width: 24px; height: 24px;";
+  quoteImage.src = './img/loading-buffering.gif';
+  quoteImage.style.cssText = 'width: 24px; height: 24px;';
 
   async function getQuotes() {
-    quote.insertAdjacentElement("afterbegin", quoteImage);
-    await fetch("https://type.fit/api/quotes", {
-      method: "GET",
+    quote.insertAdjacentElement('afterbegin', quoteImage);
+    await fetch('https://type.fit/api/quotes', {
+      method: 'GET',
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         const quoteNumber = Math.round(Math.random() * 1643);
         quote.textContent = data[quoteNumber].text;
         author.textContent = data[quoteNumber].author;
       })
       .catch(() => {
-        quote.textContent = "Server error, please, try later";
+        quote.textContent = 'Server error, please, try later';
       });
   }
 
   getQuotes();
 
-  quoteChanger.addEventListener("click", () => {
-    quote.textContent = "";
-    author.textContent = "";
+  quoteChanger.addEventListener('click', () => {
+    quote.textContent = '';
+    author.textContent = '';
     getQuotes();
   });
 
   // Simple Audio Player
 
-  const audio = new Audio(
-    "./sounds/red-hot-chili-peppers-dark-necessities.mp3"
-  );
-  const audioPrev = document.querySelector(".play-prev");
-  const audioNext = document.querySelector(".play-next");
-  const audioPlay = document.querySelector(".play");
-  const soundsList = document.querySelector(".play-list");
+  const audio = new Audio('./sounds/red-hot-chili-peppers-dark-necessities.mp3');
+  const audioPrev = document.querySelector('.play-prev');
+  const audioNext = document.querySelector('.play-next');
+  const audioPlay = document.querySelector('.play');
+  const soundsList = document.querySelector('.play-list');
 
   let playItem;
 
   function renderPlayList() {
-    playList.forEach((item) => {
-      playItem = document.createElement("li");
-      playItem.classList.add("play-item");
+    playList.forEach(item => {
+      playItem = document.createElement('li');
+      playItem.classList.add('play-item');
       playItem.textContent = item.title;
       soundsList.append(playItem);
     });
@@ -301,13 +297,13 @@ window.addEventListener("DOMContentLoaded", () => {
   let playNum = 0;
 
   function deleteActiveClass() {
-    Array.from(soundsList.children).forEach((item) => {
-      item.classList.remove("item-active");
+    Array.from(soundsList.children).forEach(item => {
+      item.classList.remove('item-active');
     });
   }
 
   function addActiveClass() {
-    soundsList.children[playNum].classList.add("item-active");
+    soundsList.children[playNum].classList.add('item-active');
   }
 
   function playAudio() {
@@ -316,14 +312,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (isPlay) {
       audio.play();
-      audioPlay.classList.add("pause");
+      audioPlay.classList.add('pause');
     } else {
       audio.pause();
-      audioPlay.classList.remove("pause");
+      audioPlay.classList.remove('pause');
     }
   }
 
-  audioPlay.addEventListener("click", () => {
+  audioPlay.addEventListener('click', () => {
     isPlay = isPlay ? false : true;
     playAudio(playNum);
   });
@@ -338,11 +334,11 @@ window.addEventListener("DOMContentLoaded", () => {
     audio.src = playList[playNum].src;
     isPlay = true;
     playAudio(playNum);
-    audioPlay.classList.add("pause");
+    audioPlay.classList.add('pause');
     trackTitle.textContent = playList[playNum].title;
   }
 
-  audioNext.addEventListener("click", nextSong);
+  audioNext.addEventListener('click', nextSong);
 
   function prevSong() {
     playNum -= 1;
@@ -354,23 +350,23 @@ window.addEventListener("DOMContentLoaded", () => {
     audio.src = playList[playNum].src;
     isPlay = true;
     playAudio(playNum);
-    audioPlay.classList.add("pause");
+    audioPlay.classList.add('pause');
     trackTitle.textContent = playList[playNum].title;
   }
 
-  audioPrev.addEventListener("click", prevSong);
+  audioPrev.addEventListener('click', prevSong);
 
-  audio.addEventListener("ended", nextSong);
+  audio.addEventListener('ended', nextSong);
 
   // Advanced audioplayer
 
-  const trackTitle = document.querySelector(".track-title");
-  const currentTime = document.querySelector(".current-time");
-  const trackDuration = document.querySelector(".duration");
-  const timeline = document.querySelector(".timeline");
-  const progress = document.querySelector(".progress");
-  const volumeInput = document.querySelector(".volume-input");
-  const volumeBtn = document.querySelector(".volume-btn");
+  const trackTitle = document.querySelector('.track-title');
+  const currentTime = document.querySelector('.current-time');
+  const trackDuration = document.querySelector('.duration');
+  const timeline = document.querySelector('.timeline');
+  const progress = document.querySelector('.progress');
+  const volumeInput = document.querySelector('.volume-input');
+  const volumeBtn = document.querySelector('.volume-btn');
 
   // Progress Bar
 
@@ -381,7 +377,7 @@ window.addEventListener("DOMContentLoaded", () => {
     trackDuration.textContent = playList[playNum].duration;
   }
 
-  audio.addEventListener("timeupdate", updateProgress);
+  audio.addEventListener('timeupdate', updateProgress);
 
   function setProgress(e) {
     const timelineWidth = e.currentTarget.clientWidth;
@@ -390,7 +386,7 @@ window.addEventListener("DOMContentLoaded", () => {
     audio.currentTime = (clickX / timelineWidth) * audio.duration;
   }
 
-  timeline.addEventListener("click", setProgress);
+  timeline.addEventListener('click', setProgress);
 
   // setInterval(updateProgress, 500);
 
@@ -398,7 +394,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let min = Math.floor(seconds / 60);
     let sec = Math.floor(seconds % 60);
 
-    min = min === "NaN:NaN" ? `0:00` : min;
+    min = min === 'NaN:NaN' ? `0:00` : min;
     sec = sec < 10 ? `0${sec}` : sec;
 
     return `${min}:${sec}`;
@@ -406,14 +402,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //  -----Volume-----
 
-  volumeInput.addEventListener("input", () => {
+  volumeInput.addEventListener('input', () => {
     audio.volume = volumeInput.value;
   });
 
-  volumeBtn.addEventListener("click", () => {
-    volumeBtn.classList.toggle("no-volume");
+  volumeBtn.addEventListener('click', () => {
+    volumeBtn.classList.toggle('no-volume');
 
-    if (volumeBtn.classList.contains("no-volume")) {
+    if (volumeBtn.classList.contains('no-volume')) {
       audio.volume = 0;
       volumeInput.value = 0;
     } else {
@@ -424,10 +420,83 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // -------------------------------------------------------------------------Settings
 
-  const settingBtn = document.querySelector(".settings-trigger");
-  const settingBody = document.querySelector(".settings-body");
+  const settingsBtn = document.querySelector('.settings-trigger');
+  const settingsBody = document.querySelector('.settings-body');
+  const settingsBlocksWrapper = document.querySelector('.settings-elements');
+  const settingsBlocks = document.querySelectorAll('.settings-element');
 
-  settingBtn.addEventListener("click", () => {
-    settingBody.classList.toggle("settings-body-active");
+  settingsBtn.addEventListener('click', () => {
+    settingsBody.classList.toggle('settings-body-active');
   });
+
+  // 1 установить всем тру
+  // 2 добавить тру в локал
+  // 3 изменить локал когда переключили
+  // 4 проверить значение в локал и установить флажок
+
+  const state = {
+    blocks: ['time', 'weather', 'player', 'greeting-container', 'quotes', 'date'],
+  };
+
+  function getLokalStorageBlock() {
+    state.blocks.forEach(block => {
+      let isChecked = JSON.parse(localStorage.getItem(`${block}`));
+      // console.log(isChecked);
+
+      if (localStorage.getItem(`${block}`)) {
+        console.log((document.querySelector(`#${block}`).checked = isChecked));
+        // document.querySelector(`#${block}`).checked = Boolean(localStorage.getItem(`${block}`));
+      }
+    });
+  }
+
+  // settingsBlocks.forEach(block => {
+  //   let blockId = block.getAttribute('id');
+  //   localStorage.setItem(`${blockId}`, block.checked);
+  // });
+
+  getLokalStorageBlock();
+
+  function hideBlock(selector) {
+    document.querySelector(selector).classList.add('hiddenBlock');
+  }
+
+  function showBlock(selector) {
+    document.querySelector(selector).classList.remove('hiddenBlock');
+  }
+
+  function getBlocksCheckedProperty() {
+    settingsBlocks.forEach(block => {
+      if (!block.checked) {
+        const selector = block.getAttribute('id');
+        hideBlock(`.${selector}`);
+      }
+    });
+  }
+
+  getBlocksCheckedProperty();
+
+  settingsBlocksWrapper.addEventListener('click', e => {
+    if (e.target && e.target.matches('.settings-element')) {
+      let blockId = e.target.getAttribute('id');
+
+      // getLokalStorageBlock();
+
+      localStorage.setItem(`${blockId}`, e.target.checked);
+
+      state.blocks.forEach(block => {
+        if (block === blockId && !e.target.checked) {
+          hideBlock(`.${block}`);
+        } else if (block === blockId && e.target.checked) {
+          showBlock(`.${block}`);
+        }
+      });
+    }
+  });
+
+  // function setLocalStorageBlock() {
+  //   settingsBlocks.forEach(block => {
+  //     localStorage.setItem(`isChecked`, false);
+  //   });
+  // }
 });
