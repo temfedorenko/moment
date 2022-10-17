@@ -1,10 +1,4 @@
-import {
-  setBg,
-  getLinkUnsplashImg,
-  getLinkFlickrImg,
-  setListenerPrev,
-  setListenerNext,
-} from './background.js';
+import { getTimeOfDay } from './greeting.js';
 
 const settings = () => {
   const settingsBtn = document.querySelector('.settings-trigger');
@@ -22,51 +16,170 @@ const settings = () => {
   //  --------------language settings
 
   //  --------------background images settings
+
+  // --------------------------------------------Background Flickr API
+
+  const body = document.querySelector('body');
+
+  async function getLinkUnsplashImg() {
+    const timeOfDay = getTimeOfDay();
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${timeOfDay}&client_id=9MyO-snxDeq1ijk465PD5YK3XcgmX_S6SNLWQSnogK0`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const imageLink = data.urls.regular;
+
+    const img = new Image();
+    img.src = imageLink;
+
+    img.onload = () => {
+      body.style.backgroundImage = `url(${imageLink})`;
+    };
+  }
+
+  // --------------------------------------------Background Flickr API
+
+  let randomNum;
+
+  function getRandomNum() {
+    randomNum = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+  }
+
+  getRandomNum();
+
+  async function getLinkFlickrImg() {
+    const timeOfDay = getTimeOfDay();
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=90b717c15d6c3d92cd7bc70b740a6573&tags=${timeOfDay}&extras=url_l&format=json&nojsoncallback=1`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    const imageLink = data.photos.photo[randomNum].url_l;
+
+    const img = new Image();
+    img.src = imageLink;
+
+    img.onload = () => {
+      body.style.backgroundImage = `url(${imageLink})`;
+    };
+  }
+
+  //   -------------------------------------Background image from git
+
+  function setBg() {
+    const timeOfDay = getTimeOfDay();
+    const bgNum = randomNum < 10 ? String(randomNum).padStart(2, '0') : randomNum;
+    const bgLink = `https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg`;
+
+    const img = new Image();
+    img.src = bgLink;
+
+    img.onload = () => {
+      body.style.backgroundImage = `url(${bgLink})`;
+    };
+  }
+
+  //   -----------------------------Slider
+
+  const prev = document.querySelector('.slide-prev');
+  const next = document.querySelector('.slide-next');
+
+  function getSlidePrev(f) {
+    randomNum -= 1;
+
+    if (randomNum < 1) {
+      randomNum = 20;
+    }
+
+    f();
+  }
+
+  function getSlideNext(f) {
+    randomNum += 1;
+
+    if (randomNum > 20) {
+      randomNum = 1;
+    }
+
+    f();
+  }
+
+  prev.addEventListener('click', () => {
+    if (bgImageSrc === 'github') {
+      getSlidePrev(setBg);
+    }
+
+    if (bgImageSrc === 'unsplash') {
+      getSlidePrev(getLinkUnsplashImg);
+    }
+
+    if (bgImageSrc === 'flickr') {
+      getSlidePrev(getLinkFlickrImg);
+    }
+  });
+
+  next.addEventListener('click', () => {
+    if (bgImageSrc === 'github') {
+      getSlideNext(setBg);
+    }
+
+    if (bgImageSrc === 'unsplash') {
+      getSlideNext(getLinkUnsplashImg);
+    }
+
+    if (bgImageSrc === 'flickr') {
+      getSlideNext(getLinkFlickrImg);
+    }
+  });
+
+  // ----------------------------------------------Settings Background
+
   const settingsImagesWrapper = document.querySelector('.settings-images');
   const settingsImages = document.querySelectorAll('.settings-image');
 
-  function checkBackgroundInput() {
-    settingsImagesWrapper.addEventListener('click', e => {
-      if (e.target && e.target.matches('.settings-image')) {
-        console.log();
-        // let e.target.value = e.target.getAttribute('id');
-        if (e.target.value === 'flickr') {
-          getLinkFlickrImg();
-          setListenerPrev(getLinkFlickrImg);
-          setListenerNext(getLinkFlickrImg);
-        } else if (e.target.value === 'unsplash') {
-          getLinkUnsplashImg();
-          setListenerPrev(getLinkUnsplashImg);
-          setListenerNext(getLinkUnsplashImg);
-        } else if (e.target.value === 'github') {
-          setBg();
-          setListenerPrev(setBg);
-          setListenerNext(setBg);
-        }
-      }
-    });
+  let bgImageSrc = 'github';
+
+  if (localStorage.getItem('bgSource')) {
+    bgImageSrc = localStorage.getItem('bgSource');
+    document.querySelector(`#${bgImageSrc}`).checked = true;
   }
 
-  checkBackgroundInput();
+  function setLocalStorageBackground() {
+    localStorage.setItem('bgSource', bgImageSrc);
+  }
 
-  // console.log(settingsImages[0].value);
+  window.addEventListener('beforeunload', setLocalStorageBackground);
 
-  // settingsImagesWrapper.addEventListener('click', e => {
-  //   if (e.target && e.target.matches('.settings-image')) {
-  //     let imageId = e.target.getAttribute('id');
-  //     console.log(imageId);
+  settingsImages.forEach(image => {
+    if (image.value === 'flickr' && bgImageSrc === 'flickr') {
+      getLinkFlickrImg();
+    }
 
-  //     localStorage.setItem(`${imageId}`, e.target.checked);
+    if (image.value === 'unsplash' && bgImageSrc === 'unsplash') {
+      getLinkUnsplashImg();
+    }
 
-  //     state.background.forEach(item => {
-  //       if (item === imageId && !e.target.checked) {
-  //         console.log('1');
-  //       } else if (item === imageId && e.target.checked) {
-  //         console.log(e.target.checked);
-  //       }
-  //     });
-  //   }
-  // });
+    if (image.value === 'github' && bgImageSrc === 'github') {
+      setBg();
+    }
+  });
+
+  settingsImagesWrapper.addEventListener('click', e => {
+    if (e.target && e.target.matches('.settings-image')) {
+      if (e.target.value === 'flickr') {
+        bgImageSrc = 'flickr';
+        getLinkFlickrImg();
+      }
+
+      if (e.target.value === 'unsplash') {
+        bgImageSrc = 'unsplash';
+        getLinkUnsplashImg();
+      }
+
+      if (e.target.value === 'github') {
+        bgImageSrc = 'github';
+        setBg();
+      }
+    }
+  });
 
   //  --------------blocks settings
 
@@ -113,7 +226,9 @@ const settings = () => {
       state.blocks.forEach(block => {
         if (block === blockId && !e.target.checked) {
           hideBlock(`.${block}`);
-        } else if (block === blockId && e.target.checked) {
+        }
+
+        if (block === blockId && e.target.checked) {
           showBlock(`.${block}`);
         }
       });

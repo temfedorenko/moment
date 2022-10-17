@@ -22,6 +22,8 @@ const getWeatherData = () => {
     }
   }
 
+  getLokalStorageCity();
+
   city.addEventListener('change', () => {
     userCity = city.value;
     getWeather();
@@ -51,10 +53,6 @@ const getWeatherData = () => {
     wind.textContent = `wind speed: ${data.wind.speed.toFixed(1)} m/s`;
     weatherError.textContent = '';
   }
-
-  //  Save city
-
-  getLokalStorageCity();
 
   function setLocalStorageCity() {
     localStorage.setItem('city', city.value);
