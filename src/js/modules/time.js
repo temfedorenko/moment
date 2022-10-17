@@ -1,31 +1,28 @@
-import { showGreeting } from './greeting.js';
+import { showGreeting } from "./greeting.js";
+import { language } from "./translator.js";
 
-const time = () => {
-  const day = document.querySelector('.date');
-  const time = document.querySelector('.time');
+const day = document.querySelector(".date");
+const time = document.querySelector(".time");
 
-  function showTime() {
-    const date = new Date();
-    const currentTime = date.toLocaleTimeString();
-    time.textContent = currentTime;
+export function showTime() {
+  const date = new Date();
+  const currentTime = date.toLocaleTimeString();
+  time.textContent = currentTime;
 
-    showDate();
-    showGreeting();
-  }
-  showTime();
-  setInterval(showTime, 1000);
+  showDate();
+  showGreeting();
+}
+showTime();
+setInterval(showTime, 1000);
 
-  function showDate() {
-    const date = new Date();
+function showDate() {
+  const date = new Date();
 
-    const currentDate = date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-    });
+  const currentDate = date.toLocaleDateString(`${language}`, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
-    day.textContent = currentDate;
-  }
-};
-
-export default time;
+  day.textContent = currentDate[0].toUpperCase() + currentDate.slice(1);
+}

@@ -38,10 +38,9 @@
     <div class="settings">
       <div class="settings-body settings-body-active">
         <div class="settings-language">
-          <div>language</div>
           <div class="toggle">
-            <input type="checkbox" />
-            <label></label>
+            <input class="language-toggle" type="checkbox" id="language-toggle">
+            <label for="language-toggle">language</label>
           </div>
         </div>
         <div class="settings-images">
@@ -54,7 +53,7 @@
           <input class="settings-image" type="radio" name="background" id="flickr" value="flickr">
         </div>
         <div class="settings-blocks">
-          <div>elements</div>
+          <div class="settings-blocks-title">Interface</div>
           <label for="time">Time</label>
           <input class="settings-block" type="checkbox" id="time" checked>
           <label for="weather">Weather</label>
@@ -96,7 +95,7 @@
     <date class="date"></date>
     <div class="greeting-container">
       <span class="greeting"></span>
-      <input type="text" class="name" placeholder="[Enter name]">
+      <input type="text" class="name">
     </div>
   </main>
 

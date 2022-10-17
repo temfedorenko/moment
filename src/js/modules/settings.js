@@ -1,39 +1,51 @@
-import { getTimeOfDay } from './greeting.js';
+import { getTimeOfDay } from "./greeting.js";
+import { language } from "./translator.js";
 
 const settings = () => {
-  const settingsBtn = document.querySelector('.settings-trigger');
-  const settingsBody = document.querySelector('.settings-body');
+  const settingsBtn = document.querySelector(".settings-trigger");
+  const settingsBody = document.querySelector(".settings-body");
 
-  settingsBtn.addEventListener('click', () => {
-    settingsBody.classList.toggle('settings-body-active');
+  settingsBtn.addEventListener("click", () => {
+    settingsBody.classList.toggle("settings-body-active");
   });
 
   const state = {
-    background: ['github', 'unsplash', 'flickr'],
-    blocks: ['time', 'weather', 'player', 'greeting-container', 'quotes', 'date'],
+    background: ["github", "unsplash", "flickr"],
+    blocks: [
+      "time",
+      "weather",
+      "player",
+      "greeting-container",
+      "quotes",
+      "date",
+    ],
   };
 
   //  --------------language settings
 
   //  --------------background images settings
 
-  // --------------------------------------------Background Flickr API
+  // --------------------------------------------Background Unsplash API
 
-  const body = document.querySelector('body');
+  const body = document.querySelector("body");
 
   async function getLinkUnsplashImg() {
-    const timeOfDay = getTimeOfDay();
-    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${timeOfDay}&client_id=9MyO-snxDeq1ijk465PD5YK3XcgmX_S6SNLWQSnogK0`;
-    const response = await fetch(url);
-    const data = await response.json();
-    const imageLink = data.urls.regular;
+    try {
+      const timeOfDay = getTimeOfDay();
+      const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${timeOfDay}&client_id=9MyO-snxDeq1ijk465PD5YK3XcgmX_S6SNLWQSnogK0`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const imageLink = data.urls.regular;
 
-    const img = new Image();
-    img.src = imageLink;
+      const img = new Image();
+      img.src = imageLink;
 
-    img.onload = () => {
-      body.style.backgroundImage = `url(${imageLink})`;
-    };
+      img.onload = () => {
+        body.style.backgroundImage = `url(${imageLink})`;
+      };
+    } catch (err) {
+      setBg();
+    }
   }
 
   // --------------------------------------------Background Flickr API
@@ -66,7 +78,8 @@ const settings = () => {
 
   function setBg() {
     const timeOfDay = getTimeOfDay();
-    const bgNum = randomNum < 10 ? String(randomNum).padStart(2, '0') : randomNum;
+    const bgNum =
+      randomNum < 10 ? String(randomNum).padStart(2, "0") : randomNum;
     const bgLink = `https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg`;
 
     const img = new Image();
@@ -79,8 +92,8 @@ const settings = () => {
 
   //   -----------------------------Slider
 
-  const prev = document.querySelector('.slide-prev');
-  const next = document.querySelector('.slide-next');
+  const prev = document.querySelector(".slide-prev");
+  const next = document.querySelector(".slide-next");
 
   function getSlidePrev(f) {
     randomNum -= 1;
@@ -102,80 +115,84 @@ const settings = () => {
     f();
   }
 
-  prev.addEventListener('click', () => {
-    if (bgImageSrc === 'github') {
+  prev.addEventListener("click", () => {
+    if (bgImageSrc === "github") {
       getSlidePrev(setBg);
     }
 
-    if (bgImageSrc === 'unsplash') {
+    if (bgImageSrc === "unsplash") {
       getSlidePrev(getLinkUnsplashImg);
     }
 
-    if (bgImageSrc === 'flickr') {
+    if (bgImageSrc === "flickr") {
       getSlidePrev(getLinkFlickrImg);
     }
   });
 
-  next.addEventListener('click', () => {
-    if (bgImageSrc === 'github') {
+  next.addEventListener("click", () => {
+    if (bgImageSrc === "github") {
       getSlideNext(setBg);
     }
 
-    if (bgImageSrc === 'unsplash') {
+    if (bgImageSrc === "unsplash") {
       getSlideNext(getLinkUnsplashImg);
     }
 
-    if (bgImageSrc === 'flickr') {
+    if (bgImageSrc === "flickr") {
       getSlideNext(getLinkFlickrImg);
     }
   });
 
   // ----------------------------------------------Settings Background
 
-  const settingsImagesWrapper = document.querySelector('.settings-images');
-  const settingsImages = document.querySelectorAll('.settings-image');
+  const settingsImagesWrapper = document.querySelector(".settings-images");
+  const settingsImages = document.querySelectorAll(".settings-image");
+  const settingsBlocksTitle = document.querySelector(".settings-blocks-title");
 
-  let bgImageSrc = 'github';
+  settingsBlocksTitle.textContent =
+    language === "en" ? "Interface" : "Інтерфейс";
 
-  if (localStorage.getItem('bgSource')) {
-    bgImageSrc = localStorage.getItem('bgSource');
+  let bgImageSrc = "github";
+
+  if (localStorage.getItem("bgSource")) {
+    bgImageSrc = localStorage.getItem("bgSource");
     document.querySelector(`#${bgImageSrc}`).checked = true;
   }
 
   function setLocalStorageBackground() {
-    localStorage.setItem('bgSource', bgImageSrc);
+    localStorage.setItem("bgSource", bgImageSrc);
   }
 
-  window.addEventListener('beforeunload', setLocalStorageBackground);
+  window.addEventListener("beforeunload", setLocalStorageBackground);
 
-  settingsImages.forEach(image => {
-    if (image.value === 'flickr' && bgImageSrc === 'flickr') {
+  settingsImages.forEach((image) => {
+    if (image.value === "flickr" && bgImageSrc === "flickr") {
       getLinkFlickrImg();
     }
 
-    if (image.value === 'unsplash' && bgImageSrc === 'unsplash') {
+    if (image.value === "unsplash" && bgImageSrc === "unsplash") {
       getLinkUnsplashImg();
     }
 
-    if (image.value === 'github' && bgImageSrc === 'github') {
+    if (image.value === "github" && bgImageSrc === "github") {
       setBg();
     }
   });
 
-  settingsImagesWrapper.addEventListener('click', e => {
-    if (e.target && e.target.matches('.settings-image')) {
-      if (e.target.value === 'flickr') {
-        bgImageSrc = 'flickr';
+  settingsImagesWrapper.addEventListener("click", (e) => {
+    if (e.target && e.target.matches(".settings-image")) {
+      if (e.target.value === "flickr") {
+        bgImageSrc = "flickr";
         getLinkFlickrImg();
       }
 
-      if (e.target.value === 'unsplash') {
-        bgImageSrc = 'unsplash';
+      if (e.target.value === "unsplash") {
+        bgImageSrc = "unsplash";
         getLinkUnsplashImg();
       }
 
-      if (e.target.value === 'github') {
-        bgImageSrc = 'github';
+      if (e.target.value === "github") {
+        bgImageSrc = "github";
         setBg();
       }
     }
@@ -183,11 +200,11 @@ const settings = () => {
 
   //  --------------blocks settings
 
-  const settingsBlocksWrapper = document.querySelector('.settings-blocks');
-  const settingsBlocks = document.querySelectorAll('.settings-block');
+  const settingsBlocksWrapper = document.querySelector(".settings-blocks");
+  const settingsBlocks = document.querySelectorAll(".settings-block");
 
   function getLokalStorageBlock() {
-    state.blocks.forEach(block => {
+    state.blocks.forEach((block) => {
       let isChecked = JSON.parse(localStorage.getItem(`${block}`));
 
       if (localStorage.getItem(`${block}`)) {
@@ -199,17 +216,17 @@ const settings = () => {
   getLokalStorageBlock();
 
   function hideBlock(selector) {
-    document.querySelector(selector).classList.add('hiddenBlock');
+    document.querySelector(selector).classList.add("hiddenBlock");
   }
 
   function showBlock(selector) {
-    document.querySelector(selector).classList.remove('hiddenBlock');
+    document.querySelector(selector).classList.remove("hiddenBlock");
   }
 
   function hideBlocksFromLocalStorage() {
-    settingsBlocks.forEach(block => {
+    settingsBlocks.forEach((block) => {
       if (!block.checked) {
-        const selector = block.getAttribute('id');
+        const selector = block.getAttribute("id");
         hideBlock(`.${selector}`);
       }
     });
@@ -217,13 +234,13 @@ const settings = () => {
 
   hideBlocksFromLocalStorage();
 
-  settingsBlocksWrapper.addEventListener('click', e => {
-    if (e.target && e.target.matches('.settings-block')) {
-      let blockId = e.target.getAttribute('id');
+  settingsBlocksWrapper.addEventListener("click", (e) => {
+    if (e.target && e.target.matches(".settings-block")) {
+      let blockId = e.target.getAttribute("id");
 
       localStorage.setItem(`${blockId}`, e.target.checked);
 
-      state.blocks.forEach(block => {
+      state.blocks.forEach((block) => {
         if (block === blockId && !e.target.checked) {
           hideBlock(`.${block}`);
         }
