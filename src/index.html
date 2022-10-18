@@ -35,29 +35,7 @@
       </div>
       <ul class="play-list"></ul>
     </div>
-    <div class="settings">
-      <div class="settings-body">
-        <div class="settings-language">
-          <div class="toggle">
-            <input class="language-toggle" type="checkbox" id="language-toggle">
-            <label class="settings-language-title" for="language-toggle">language</label>
-          </div>
-        </div>
-        <div class="settings-images">
-          <div class="settings-images-title">Backgroung images</div>
-          <label for="github">Github</label>
-          <input class="settings-image" type="radio" name="background" id="github" value="github" checked>
-          <label for="unsplash">Unsplash </label>
-          <input class="settings-image" type="radio" name="background" id="unsplash" value="unsplash">
-          <label for="flickr">Flickr</label>
-          <input class="settings-image" type="radio" name="background" id="flickr" value="flickr">
-        </div>
-        <div class="settings-blocks"></div>
-      </div>
-      <div class="settings-trigger">
-        <button class="settings-icon"></button>
-      </div>
-    </div>
+    
     <div class="weather">
       <input type="text" class="city">
       <i class="weather-icon owf"></i>
@@ -92,6 +70,37 @@
         <div class="quote"></div>
         <div class="author"></div>
       </div>
+    </div>
+    <div class="settings">
+      <div class="settings-trigger">
+        <button class="settings-icon"></button>
+      </div>
+      <div class="settings-body settings-body-active">
+        <div class="settings-language">
+          <div class="settings-language-title">language</div>
+          <div class="toggle">
+            <input class="language-toggle" type="checkbox" id="language-toggle">
+            <label for="language-toggle"></label>
+          </div>
+        </div>
+        <div class="settings-images">
+          <div class="settings-images-title">Backgroung images</div>
+          <div class="settings-image-wrapper">
+            <label for="github">Github</label>
+            <input class="settings-image" type="radio" name="background" id="github" value="github" checked>
+          </div>
+          <div class="settings-image-wrapper">
+            <label for="unsplash">Unsplash </label>
+            <input class="settings-image" type="radio" name="background" id="unsplash" value="unsplash">
+          </div>
+          <div class="settings-image-wrapper">
+            <label for="flickr">Flickr</label>
+            <input class="settings-image" type="radio" name="background" id="flickr" value="flickr">
+          </div>
+        </div>
+        <div class="settings-blocks"></div>
+      </div>
+      
     </div>
   </footer>
 

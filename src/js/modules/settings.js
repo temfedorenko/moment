@@ -193,20 +193,27 @@ export function renderSettingsBlocks(lang = "en") {
         <div class="settings-blocks-title">${
           lang === "en" ? "Interface" : "Інтерфейс"
         }</div>
-        <label for="time">${lang === "en" ? "Time" : "Час"}</label>
-        <input class="settings-block" type="checkbox" id="time" checked>
-        <label for="weather">${lang === "en" ? "Weather" : "Погода"}</label>
-        <input class="settings-block" type="checkbox" id="weather" checked>
-        <label for="player">${lang === "en" ? "Player" : "Музика"}</label>
-        <input class="settings-block" type="checkbox" id="player" checked>
-        <label for="greeting-container">${
-          lang === "en" ? "Greeting" : "Вітання"
-        }</label>
-        <input class="settings-block" type="checkbox" id="greeting-container" checked>
-        <label for="quotes">${lang === "en" ? "Quotes" : "Цитати"}</label>
-        <input class="settings-block" type="checkbox" id="quotes" checked>
-        <label for="date">${lang === "en" ? "Date" : "Дата"}</label>
-        <input class="settings-block" type="checkbox" id="date" checked>
+        <div class="settings-block-wrapper">
+          <div class="settings-blocks-left">
+            <label for="time">${lang === "en" ? "Time" : "Час"}</label>
+            <input class="settings-block" type="checkbox" id="time" checked>
+            <label for="weather">${lang === "en" ? "Weather" : "Погода"}</label>
+            <input class="settings-block" type="checkbox" id="weather" checked>
+            <label for="player">${lang === "en" ? "Player" : "Музика"}</label>
+            <input class="settings-block" type="checkbox" id="player" checked>
+          </div>
+          <div class="settings-blocks-right">
+            <label for="date">${lang === "en" ? "Date" : "Дата"}</label>
+            <input class="settings-block" type="checkbox" id="date" checked>
+            <label for="greeting-container">${
+              lang === "en" ? "Greeting" : "Вітання"
+            }</label>
+            <input class="settings-block" type="checkbox" id="greeting-container" checked>
+            <label for="quotes">${lang === "en" ? "Quotes" : "Цитати"}</label>
+            <input class="settings-block" type="checkbox" id="quotes" checked>
+          </div>
+        </div>
+
 `;
 
   getLokalStorageBlock();
