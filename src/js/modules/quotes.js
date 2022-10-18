@@ -1,35 +1,41 @@
-const getQuotesData = () => {
-  const quote = document.querySelector('.quote');
-  const author = document.querySelector('.author');
-  const quoteChanger = document.querySelector('.change-quote');
+import { language } from "./translator.js";
 
-  const quoteImage = new Image();
-  quoteImage.src = './img/loading-buffering.gif';
-  quoteImage.style.cssText = 'width: 24px; height: 24px;';
+const quote = document.querySelector(".quote");
+const author = document.querySelector(".author");
+const quoteChanger = document.querySelector(".change-quote");
 
-  async function getQuotes() {
-    quote.insertAdjacentElement('afterbegin', quoteImage);
-    await fetch('https://type.fit/api/quotes', {
-      method: 'GET',
+const quoteImage = new Image();
+quoteImage.src = "./img/loading-buffering.gif";
+quoteImage.style.cssText = "width: 24px; height: 24px;";
+
+export function getQuotes() {
+  quote.textContent = "";
+  author.textContent = "";
+  quote.insertAdjacentElement("afterbegin", quoteImage);
+
+  const url =
+    language === "en" ? "https://type.fit/api/quotes" : "../quotes.json";
+  fetch(url, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.length);
+      const quoteNumber = Math.floor(Math.random() * data.length);
+      quote.textContent = data[quoteNumber].text;
+      author.textContent = data[quoteNumber].author;
     })
-      .then(response => response.json())
-      .then(data => {
-        const quoteNumber = Math.round(Math.random() * 1643);
-        quote.textContent = data[quoteNumber].text;
-        author.textContent = data[quoteNumber].author;
-      })
-      .catch(() => {
-        quote.textContent = 'Server error, please, try later';
-      });
-  }
+    .catch(() => {
+      quote.textContent = "Server error, please, try later";
+    });
+}
 
+// getQuotes();
+
+export function refreshQuote() {
+  quote.textContent = "";
+  author.textContent = "";
   getQuotes();
+}
 
-  quoteChanger.addEventListener('click', () => {
-    quote.textContent = '';
-    author.textContent = '';
-    getQuotes();
-  });
-};
-
-export default getQuotesData;
+quoteChanger.addEventListener("click", refreshQuote);
