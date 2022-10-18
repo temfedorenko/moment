@@ -1,37 +1,33 @@
-import { getTimeOfDay } from "./greeting.js";
-import { language } from "./translator.js";
+import { getTimeOfDay } from './greeting.js';
+import { language } from './translator.js';
 
 const settings = () => {
-  const settingsBtn = document.querySelector(".settings-trigger");
-  const settingsBody = document.querySelector(".settings-body");
+  const settingsBtn = document.querySelector('.settings-trigger');
+  const settingsBody = document.querySelector('.settings-body');
 
-  settingsBtn.addEventListener("click", () => {
-    settingsBody.classList.toggle("settings-body-active");
+  settingsBtn.addEventListener('click', () => {
+    settingsBody.classList.toggle('settings-body-active');
   });
 
-  const state = {
-    background: ["github", "unsplash", "flickr"],
-    blocks: [
-      "time",
-      "weather",
-      "player",
-      "greeting-container",
-      "quotes",
-      "date",
-    ],
-  };
+  // const state = {
+  //   background: ['github', 'unsplash', 'flickr'],
+  //   blocks: ['time', 'weather', 'player', 'greeting-container', 'quotes', 'date'],
+  // };
 
   //  --------------language settings
+
+  // const settingsLanguageTitle = document.querySelector('.settings-language-title');
+  // settingsLanguageTitle.textContent = language === 'en' ? 'Language' : 'Мова';
 
   //  --------------background images settings
 
   // --------------------------------------------Background Unsplash API
 
-  const body = document.querySelector("body");
+  const body = document.querySelector('body');
 
   async function getLinkUnsplashImg() {
     try {
-      const timeOfDay = getTimeOfDay();
+      const timeOfDay = getTimeOfDay('en');
       const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${timeOfDay}&client_id=9MyO-snxDeq1ijk465PD5YK3XcgmX_S6SNLWQSnogK0`;
       const response = await fetch(url);
       const data = await response.json();
@@ -59,7 +55,7 @@ const settings = () => {
   getRandomNum();
 
   async function getLinkFlickrImg() {
-    const timeOfDay = getTimeOfDay();
+    const timeOfDay = getTimeOfDay('en');
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=90b717c15d6c3d92cd7bc70b740a6573&tags=${timeOfDay}&extras=url_l&format=json&nojsoncallback=1`;
 
     const response = await fetch(url);
@@ -77,9 +73,8 @@ const settings = () => {
   //   -------------------------------------Background image from git
 
   function setBg() {
-    const timeOfDay = getTimeOfDay();
-    const bgNum =
-      randomNum < 10 ? String(randomNum).padStart(2, "0") : randomNum;
+    const timeOfDay = getTimeOfDay('en');
+    const bgNum = randomNum < 10 ? String(randomNum).padStart(2, '0') : randomNum;
     const bgLink = `https://raw.githubusercontent.com/temfedorenko/moment-images/master/moment-images/${timeOfDay}/${bgNum}.jpg`;
 
     const img = new Image();
@@ -92,8 +87,8 @@ const settings = () => {
 
   //   -----------------------------Slider
 
-  const prev = document.querySelector(".slide-prev");
-  const next = document.querySelector(".slide-next");
+  const prev = document.querySelector('.slide-prev');
+  const next = document.querySelector('.slide-next');
 
   function getSlidePrev(f) {
     randomNum -= 1;
@@ -115,142 +110,166 @@ const settings = () => {
     f();
   }
 
-  prev.addEventListener("click", () => {
-    if (bgImageSrc === "github") {
+  prev.addEventListener('click', () => {
+    if (bgImageSrc === 'github') {
       getSlidePrev(setBg);
     }
 
-    if (bgImageSrc === "unsplash") {
+    if (bgImageSrc === 'unsplash') {
       getSlidePrev(getLinkUnsplashImg);
     }
 
-    if (bgImageSrc === "flickr") {
+    if (bgImageSrc === 'flickr') {
       getSlidePrev(getLinkFlickrImg);
     }
   });
 
-  next.addEventListener("click", () => {
-    if (bgImageSrc === "github") {
+  next.addEventListener('click', () => {
+    if (bgImageSrc === 'github') {
       getSlideNext(setBg);
     }
 
-    if (bgImageSrc === "unsplash") {
+    if (bgImageSrc === 'unsplash') {
       getSlideNext(getLinkUnsplashImg);
     }
 
-    if (bgImageSrc === "flickr") {
+    if (bgImageSrc === 'flickr') {
       getSlideNext(getLinkFlickrImg);
     }
   });
 
   // ----------------------------------------------Settings Background
 
-  const settingsImagesWrapper = document.querySelector(".settings-images");
-  const settingsImages = document.querySelectorAll(".settings-image");
-  const settingsBlocksTitle = document.querySelector(".settings-blocks-title");
+  const settingsImagesWrapper = document.querySelector('.settings-images');
+  const settingsImages = document.querySelectorAll('.settings-image');
+  // const settingsImagesTitle = document.querySelector('.settings-images-title');
 
-  settingsBlocksTitle.textContent =
-    language === "en" ? "Interface" : "Інтерфейс";
+  // settingsImagesTitle.textContent = language === 'en' ? 'Backgroung images' : 'Фонові зображення';
 
-  let bgImageSrc = "github";
+  let bgImageSrc = 'github';
 
-  if (localStorage.getItem("bgSource")) {
-    bgImageSrc = localStorage.getItem("bgSource");
+  if (localStorage.getItem('bgSource')) {
+    bgImageSrc = localStorage.getItem('bgSource');
     document.querySelector(`#${bgImageSrc}`).checked = true;
   }
 
   function setLocalStorageBackground() {
-    localStorage.setItem("bgSource", bgImageSrc);
+    localStorage.setItem('bgSource', bgImageSrc);
   }
 
-  window.addEventListener("beforeunload", setLocalStorageBackground);
+  window.addEventListener('beforeunload', setLocalStorageBackground);
 
-  settingsImages.forEach((image) => {
-    if (image.value === "flickr" && bgImageSrc === "flickr") {
-      getLinkFlickrImg();
-    }
-
-    if (image.value === "unsplash" && bgImageSrc === "unsplash") {
-      getLinkUnsplashImg();
-    }
-
-    if (image.value === "github" && bgImageSrc === "github") {
-      setBg();
-    }
-  });
-
-  settingsImagesWrapper.addEventListener("click", (e) => {
-    if (e.target && e.target.matches(".settings-image")) {
-      if (e.target.value === "flickr") {
-        bgImageSrc = "flickr";
+  function getCheckedBackround() {
+    settingsImages.forEach(image => {
+      if (image.value === 'flickr' && bgImageSrc === 'flickr') {
         getLinkFlickrImg();
       }
 
-      if (e.target.value === "unsplash") {
-        bgImageSrc = "unsplash";
+      if (image.value === 'unsplash' && bgImageSrc === 'unsplash') {
         getLinkUnsplashImg();
       }
 
-      if (e.target.value === "github") {
-        bgImageSrc = "github";
+      if (image.value === 'github' && bgImageSrc === 'github') {
+        setBg();
+      }
+    });
+  }
+
+  getCheckedBackround();
+
+  settingsImagesWrapper.addEventListener('click', e => {
+    if (e.target && e.target.matches('.settings-image')) {
+      if (e.target.value === 'flickr') {
+        bgImageSrc = 'flickr';
+        getLinkFlickrImg();
+      }
+
+      if (e.target.value === 'unsplash') {
+        bgImageSrc = 'unsplash';
+        getLinkUnsplashImg();
+      }
+
+      if (e.target.value === 'github') {
+        bgImageSrc = 'github';
         setBg();
       }
     }
   });
 
-  //  --------------blocks settings
+  // //  --------------blocks settings
 
-  const settingsBlocksWrapper = document.querySelector(".settings-blocks");
-  const settingsBlocks = document.querySelectorAll(".settings-block");
+  // const settingsBlocksWrapper = document.querySelector('.settings-blocks');
 
-  function getLokalStorageBlock() {
-    state.blocks.forEach((block) => {
-      let isChecked = JSON.parse(localStorage.getItem(`${block}`));
+  // function renderSettingsBlocks(lang) {
+  //   settingsBlocksWrapper.innerHTML = `
+  // <div class="settings-blocks-title">${lang === 'en' ? 'Interface' : 'Інтерфейс'}</div>
+  //         <label for="time">${lang === 'en' ? 'Time' : 'Час'}</label>
+  //         <input class="settings-block" type="checkbox" id="time" checked>
+  //         <label for="weather">${lang === 'en' ? 'Weather' : 'Погода'}</label>
+  //         <input class="settings-block" type="checkbox" id="weather" checked>
+  //         <label for="player">${lang === 'en' ? 'Player' : 'Музика'}</label>
+  //         <input class="settings-block" type="checkbox" id="player" checked>
+  //         <label for="greeting-container">${lang === 'en' ? 'Greeting' : 'Вітання'}</label>
+  //         <input class="settings-block" type="checkbox" id="greeting-container" checked>
+  //         <label for="quotes">${lang === 'en' ? 'Quotes' : 'Вислови'}</label>
+  //         <input class="settings-block" type="checkbox" id="quotes" checked>
+  //         <label for="date">${lang === 'en' ? 'Date' : 'Дата'}</label>
+  //         <input class="settings-block" type="checkbox" id="date" checked>
+  // `;
+  // }
 
-      if (localStorage.getItem(`${block}`)) {
-        document.querySelector(`#${block}`).checked = isChecked;
-      }
-    });
-  }
+  // renderSettingsBlocks(language);
 
-  getLokalStorageBlock();
+  // const settingsBlocks = document.querySelectorAll('.settings-block');
 
-  function hideBlock(selector) {
-    document.querySelector(selector).classList.add("hiddenBlock");
-  }
+  // function getLokalStorageBlock() {
+  //   state.blocks.forEach(block => {
+  //     let isChecked = JSON.parse(localStorage.getItem(`${block}`));
 
-  function showBlock(selector) {
-    document.querySelector(selector).classList.remove("hiddenBlock");
-  }
+  //     if (localStorage.getItem(`${block}`)) {
+  //       document.querySelector(`#${block}`).checked = isChecked;
+  //     }
+  //   });
+  // }
 
-  function hideBlocksFromLocalStorage() {
-    settingsBlocks.forEach((block) => {
-      if (!block.checked) {
-        const selector = block.getAttribute("id");
-        hideBlock(`.${selector}`);
-      }
-    });
-  }
+  // getLokalStorageBlock();
 
-  hideBlocksFromLocalStorage();
+  // function hideBlock(selector) {
+  //   document.querySelector(selector).classList.add('hiddenBlock');
+  // }
 
-  settingsBlocksWrapper.addEventListener("click", (e) => {
-    if (e.target && e.target.matches(".settings-block")) {
-      let blockId = e.target.getAttribute("id");
+  // function showBlock(selector) {
+  //   document.querySelector(selector).classList.remove('hiddenBlock');
+  // }
 
-      localStorage.setItem(`${blockId}`, e.target.checked);
+  // function hideBlocksFromLocalStorage() {
+  //   settingsBlocks.forEach(block => {
+  //     if (!block.checked) {
+  //       const selector = block.getAttribute('id');
+  //       hideBlock(`.${selector}`);
+  //     }
+  //   });
+  // }
 
-      state.blocks.forEach((block) => {
-        if (block === blockId && !e.target.checked) {
-          hideBlock(`.${block}`);
-        }
+  // hideBlocksFromLocalStorage();
 
-        if (block === blockId && e.target.checked) {
-          showBlock(`.${block}`);
-        }
-      });
-    }
-  });
+  // settingsBlocksWrapper.addEventListener('click', e => {
+  //   if (e.target && e.target.matches('.settings-block')) {
+  //     let blockId = e.target.getAttribute('id');
+
+  //     localStorage.setItem(`${blockId}`, e.target.checked);
+
+  //     state.blocks.forEach(block => {
+  //       if (block === blockId && !e.target.checked) {
+  //         hideBlock(`.${block}`);
+  //       }
+
+  //       if (block === blockId && e.target.checked) {
+  //         showBlock(`.${block}`);
+  //       }
+  //     });
+  //   }
+  // });
 };
 
 export default settings;

@@ -1,8 +1,8 @@
-import { showGreeting } from "./greeting.js";
-import { language } from "./translator.js";
+import { showGreeting } from './greeting.js';
+import { language } from './translator.js';
 
-const day = document.querySelector(".date");
-const time = document.querySelector(".time");
+const day = document.querySelector('.date');
+const time = document.querySelector('.time');
 
 export function showTime() {
   const date = new Date();
@@ -19,9 +19,9 @@ function showDate() {
   const date = new Date();
 
   const currentDate = date.toLocaleDateString(`${language}`, {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
   });
 
   day.textContent = currentDate[0].toUpperCase() + currentDate.slice(1);
