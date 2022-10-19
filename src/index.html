@@ -13,41 +13,43 @@
 <body>
 
   <header class="header">
-    <div class="player">
-      <div class="player-wrapper">
-        <div class="track-title">Dark Necessities</div>
-        <div class="track-time">
-          <div class="current-time">0:00</div>
-          <div class="duration">01:12</div>
+    <section class="player">
+      <div class="player__wrapper">
+        <div class="player__title">Dark Necessities</div>
+        <div class="player__time">
+          <div class="player__current-time">0:00</div>
+          <div class="player__duration">01:12</div>
         </div>
-        <div class="timeline">
-          <div class="progress"></div>
+        <div class="player__timeline timeline">
+          <div class="timeline__progress"></div>
         </div>
-        <div class="player-controls">
+        <div class="player__controls">
           <button class="play-prev player-icon"></button>
           <button class="play player-icon"></button>
           <button class="play-next player-icon"></button>
         </div>
-        <div class="volume">
-          <input type="range" name="volume" min="0" max="1" step="0.01" value="0.5" class="volume-input">
-          <button class="volume-btn player-icon"></button>
+        <div class="player__volume">
+          <input type="range" name="volume" min="0" max="1" step="0.01" value="0.5" class="player__volume-input">
+          <button class="player__volume-btn player-icon"></button>
         </div>
       </div>
-      <ul class="play-list"></ul>
-    </div>
+      <ul class="player__play-list"></ul>
+    </section>
 
-    <div class="weather">
-      <input type="text" class="city">
-      <i class="weather-icon owf"></i>
-      <div class="weather-error"></div>
-      <div class="description-container">
-        <span class="temperature"></span>
-        <span class="feels-like"></span>
-        <span class="weather-description"></span>
+    <section class="weather">
+      <div class="weather__wrapper">
+        <input type="text" class="city">
+        <i class="weather-icon owf"></i>
+        <div class="weather-error"></div>
+        <div class="description-container">
+          <span class="temperature"></span>
+          <span class="feels-like"></span>
+          <span class="weather-description"></span>
+          <span class="wind"></span>
+          <span class="humidity"></span>
+        </div>
       </div>
-      <div class="wind"></div>
-      <div class="humidity"></div>
-    </div>
+    </section>
   </header>
 
   <main class="main">
@@ -64,14 +66,14 @@
   </main>
 
   <footer class="footer">
-    <div class="quotes">
+    <section class="quotes">
       <button class="change-quote"></button>
       <div class="quote-body">
         <div class="quote"></div>
         <div class="author"></div>
       </div>
-    </div>
-    <div class="settings">
+    <section/>
+    <section class="settings">
       <div class="settings-trigger">
         <button class="settings-icon"></button>
       </div>
@@ -100,8 +102,8 @@
         </div>
         <div class="settings-blocks"></div>
       </div>
-
-    </div>
+    </section>
+    
   </footer>
 
   <script type="module" src="js/script.js"></script>
