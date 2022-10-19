@@ -14,7 +14,7 @@ export function getQuotes() {
   quote.insertAdjacentElement("afterbegin", quoteImage);
 
   const url =
-    language === "en" ? "https://type.fit/api/quotes" : "../quotes.json";
+    language === "en" ? "https://type.fit/api/quotes" : "./quotes.json";
   fetch(url, {
     method: "GET",
   })
